@@ -13,3 +13,5 @@ void LogInfoIn(const char *pszFormat, ...);
 void LogFile(const char *pszFormat, ...);
 std::string MyTrim(char sz[]);
 std::string MyTrim(std::string &str);
+std::string UTF8ToAnsi( const std::string& strIn, std::string& strOut );
+std::string AnsiToUTF8( const std::string& strIn, std::string& strOut );

@@ -169,3 +169,51 @@ void SetLogEdit( CEdit* pEditLog )
 {
 	s_pEditLog = pEditLog;
 }
+
+std::string UTF8ToAnsi( const std::string& strIn, std::string& strOut )
+{
+	WCHAR* strSrc    = NULL;
+	TCHAR* szRes    = NULL;
+
+	int i = MultiByteToWideChar(CP_UTF8, 0, strIn.c_str(), -1, NULL, 0);
+
+	strSrc = new WCHAR[i+1];
+	MultiByteToWideChar(CP_UTF8, 0, strIn.c_str(), -1, strSrc, i);
+
+	i = WideCharToMultiByte(CP_ACP, 0, strSrc, -1, NULL, 0, NULL, NULL);
+
+	szRes = new TCHAR[i+1];
+	WideCharToMultiByte(CP_ACP, 0, strSrc, -1, szRes, i, NULL, NULL);
+
+	strOut = szRes;
+
+	delete[] strSrc;
+	delete[] szRes;
+
+	return strOut;
+}
+
+std::string AnsiToUTF8( const std::string& strIn, std::string& strOut )
+{
+	WCHAR* strSrc    = NULL;
+	TCHAR* szRes    = NULL;
+
+	int len = MultiByteToWideChar(CP_ACP, 0, (LPCTSTR)strIn.c_str(), -1, NULL,0);
+
+	unsigned short* wszUtf8 = new unsigned short[len+1];
+	memset(wszUtf8, 0, len * 2 + 2);
+	MultiByteToWideChar(CP_ACP, 0, (LPCTSTR)strIn.c_str(), -1, (LPWSTR)wszUtf8, len);
+
+	len = WideCharToMultiByte(CP_UTF8, 0, (LPCWSTR)wszUtf8, -1, NULL, 0, NULL, NULL);
+
+	char* szUtf8 = new char[len + 1];
+	memset(szUtf8, 0, len + 1);
+	WideCharToMultiByte (CP_UTF8, 0, (LPCWSTR)wszUtf8, -1, szUtf8, len, NULL,NULL);
+
+	strOut = szUtf8;
+
+	delete[] szUtf8;
+	delete[] wszUtf8;
+
+	return strOut;
+}

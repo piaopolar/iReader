@@ -30,4 +30,6 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	CEdit m_edtLog;
+	CEdit m_edtKeyWord;
+	afx_msg void OnBnClickedBtnSearch();
 };

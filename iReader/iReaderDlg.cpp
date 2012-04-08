@@ -4,6 +4,7 @@
 #include "stdafx.h"
 
 #include "../BaseCode/BaseFunc.h"
+#include "ZHDataMgr.h"
 
 #include "iReader.h"
 #include "iReaderDlg.h"
@@ -59,6 +60,7 @@ void CiReaderDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_EDT_LOGINFO, m_edtLog);
+	DDX_Control(pDX, IDC_EDT_KEYWORD, m_edtKeyWord);
 }
 
 BEGIN_MESSAGE_MAP(CiReaderDlg, CDialog)
@@ -66,6 +68,7 @@ BEGIN_MESSAGE_MAP(CiReaderDlg, CDialog)
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
 	//}}AFX_MSG_MAP
+	ON_BN_CLICKED(IDC_BTN_SEARCH, &CiReaderDlg::OnBnClickedBtnSearch)
 END_MESSAGE_MAP()
 
 
@@ -153,3 +156,10 @@ HCURSOR CiReaderDlg::OnQueryDragIcon()
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
+
+void CiReaderDlg::OnBnClickedBtnSearch()
+{
+	char szKeyWord[MAX_STRING];
+	m_edtKeyWord.GetWindowText(szKeyWord, sizeof(szKeyWord));
+	CZHDataMgr::GetInstance().GetBookUrl(szKeyWord);
+}
