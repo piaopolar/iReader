@@ -1,22 +1,24 @@
 #pragma once
-
 #include <string>
 #include <vector>
 
 #include "../BaseCode/Singleton.h"
 
-
 class CZHDataMgr : public Singleton<CZHDataMgr>
 {
 public:
-	enum
+	struct BOOK_INFO
 	{
-		KEYWORD_TYPE_BOOKNAME,
+		std::string m_strBookName;
+		std::string m_strBookUrl;
+		std::string m_strAuthor;
 	};
 public:
-	CZHDataMgr(void);
-	~CZHDataMgr(void);
-
+	enum { KEYWORD_TYPE_BOOKNAME, };
 public:
-	std::vector<std::string> GetBookUrl(const char* pszKeyWord, int nType = KEYWORD_TYPE_BOOKNAME);
+	CZHDataMgr(void);
+	~ CZHDataMgr(void);
+public:
+	std::vector<CZHDataMgr::BOOK_INFO> GetBookInfo(const char *pszKeyWord,
+												   int nType = KEYWORD_TYPE_BOOKNAME);
 };

@@ -161,5 +161,5 @@ void CiReaderDlg::OnBnClickedBtnSearch()
 {
 	char szKeyWord[MAX_STRING];
 	m_edtKeyWord.GetWindowText(szKeyWord, sizeof(szKeyWord));
-	CZHDataMgr::GetInstance().GetBookUrl(szKeyWord);
+	CZHDataMgr::GetInstance().GetBookInfo(szKeyWord);
 }

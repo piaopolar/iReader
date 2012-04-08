@@ -2,7 +2,7 @@
 
 #include "BaseFunc.h"
 
-CEdit* s_pEditLog;
+CEdit *s_pEditLog;
 
 // ============================================================================
 // ==============================================================================
@@ -61,6 +61,7 @@ void TrimRight(char *pszStr)
 			break;
 		}
 	}
+
 	*(pLast + 1) = 0;
 }
 
@@ -84,6 +85,7 @@ void LogInfoIn(const char *pszFormat, ...)
 	vsprintf_s(buffer, len, pszFormat, args);
 
 	strLine = buffer;
+	ReplaceStdString(strLine, "\n", "\r\n");
 	free(buffer);
 
 	strLine += "\r\n";
@@ -125,7 +127,7 @@ void LogFile(const char *pszFormat, ...)
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 	GetPrivateProfileString("GlobalSet", "LogFile", "", szLogFile,
-		sizeof(szLogFile), CONFIG_INI);
+							sizeof(szLogFile), CONFIG_INI);
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	FILE *pFile = fopen(szLogFile, "w+");
@@ -165,24 +167,29 @@ std::string MyTrim(std::string &str)
 	return str;
 }
 
-void SetLogEdit( CEdit* pEditLog )
+// ============================================================================
+// ==============================================================================
+void SetLogEdit(CEdit *pEditLog)
 {
 	s_pEditLog = pEditLog;
 }
 
-std::string UTF8ToAnsi( const std::string& strIn, std::string& strOut )
+// ============================================================================
+// ==============================================================================
+std::string UTF8ToAnsi(const std::string &strIn, std::string &strOut)
 {
-	WCHAR* strSrc    = NULL;
-	TCHAR* szRes    = NULL;
-
+	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	WCHAR *strSrc = NULL;
+	TCHAR *szRes = NULL;
 	int i = MultiByteToWideChar(CP_UTF8, 0, strIn.c_str(), -1, NULL, 0);
+	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-	strSrc = new WCHAR[i+1];
+	strSrc = new WCHAR[i + 1];
 	MultiByteToWideChar(CP_UTF8, 0, strIn.c_str(), -1, strSrc, i);
 
 	i = WideCharToMultiByte(CP_ACP, 0, strSrc, -1, NULL, 0, NULL, NULL);
 
-	szRes = new TCHAR[i+1];
+	szRes = new TCHAR[i + 1];
 	WideCharToMultiByte(CP_ACP, 0, strSrc, -1, szRes, i, NULL, NULL);
 
 	strOut = szRes;
@@ -193,22 +200,32 @@ std::string UTF8ToAnsi( const std::string& strIn, std::string& strOut )
 	return strOut;
 }
 
-std::string AnsiToUTF8( const std::string& strIn, std::string& strOut )
+// ============================================================================
+// ==============================================================================
+std::string AnsiToUTF8(const std::string &strIn, std::string &strOut)
 {
-	WCHAR* strSrc    = NULL;
-	TCHAR* szRes    = NULL;
+	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	WCHAR *strSrc = NULL;
+	TCHAR *szRes = NULL;
+	int len = MultiByteToWideChar(CP_ACP, 0, (LPCTSTR) strIn.c_str(), -1, NULL,
+								  0);
+	unsigned short *wszUtf8 = new unsigned short[len + 1];
+	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-	int len = MultiByteToWideChar(CP_ACP, 0, (LPCTSTR)strIn.c_str(), -1, NULL,0);
-
-	unsigned short* wszUtf8 = new unsigned short[len+1];
 	memset(wszUtf8, 0, len * 2 + 2);
-	MultiByteToWideChar(CP_ACP, 0, (LPCTSTR)strIn.c_str(), -1, (LPWSTR)wszUtf8, len);
+	MultiByteToWideChar(CP_ACP, 0, (LPCTSTR) strIn.c_str(), -1, (LPWSTR) wszUtf8,
+						len);
 
-	len = WideCharToMultiByte(CP_UTF8, 0, (LPCWSTR)wszUtf8, -1, NULL, 0, NULL, NULL);
+	len = WideCharToMultiByte(CP_UTF8, 0, (LPCWSTR) wszUtf8, -1, NULL, 0, NULL,
+							  NULL);
 
-	char* szUtf8 = new char[len + 1];
+	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	char *szUtf8 = new char[len + 1];
+	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 	memset(szUtf8, 0, len + 1);
-	WideCharToMultiByte (CP_UTF8, 0, (LPCWSTR)wszUtf8, -1, szUtf8, len, NULL,NULL);
+	WideCharToMultiByte(CP_UTF8, 0, (LPCWSTR) wszUtf8, -1, szUtf8, len, NULL,
+						NULL);
 
 	strOut = szUtf8;
 
@@ -216,4 +233,19 @@ std::string AnsiToUTF8( const std::string& strIn, std::string& strOut )
 	delete[] wszUtf8;
 
 	return strOut;
+}
+
+// ============================================================================
+// ==============================================================================
+void ReplaceStdString(std::string &str,
+					  const std::string &strSrc,
+					  const std::string &strDest)
+{
+	//~~~~~~~~~~~~~~~~~~~~~~~
+	CString cstr = str.c_str();
+	//~~~~~~~~~~~~~~~~~~~~~~~
+
+	cstr.Replace(strSrc.c_str(), strDest.c_str());
+
+	str = cstr.GetBuffer(0);
 }
