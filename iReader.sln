@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "iReader", "iReader\iReader.vcproj", "{C6D2C1A8-3173-442A-B6C4-F7DF2A32B33D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{122E66DA-E3D1-49A7-BEC2-7F692006D1F4} = {122E66DA-E3D1-49A7-BEC2-7F692006D1F4}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BaseCode", "BaseCode\BaseCode.vcproj", "{122E66DA-E3D1-49A7-BEC2-7F692006D1F4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C6D2C1A8-3173-442A-B6C4-F7DF2A32B33D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{C6D2C1A8-3173-442A-B6C4-F7DF2A32B33D}.Debug|Win32.Build.0 = Debug|Win32
+		{C6D2C1A8-3173-442A-B6C4-F7DF2A32B33D}.Release|Win32.ActiveCfg = Release|Win32
+		{C6D2C1A8-3173-442A-B6C4-F7DF2A32B33D}.Release|Win32.Build.0 = Release|Win32
+		{122E66DA-E3D1-49A7-BEC2-7F692006D1F4}.Debug|Win32.ActiveCfg = Debug|Win32
+		{122E66DA-E3D1-49A7-BEC2-7F692006D1F4}.Debug|Win32.Build.0 = Debug|Win32
+		{122E66DA-E3D1-49A7-BEC2-7F692006D1F4}.Release|Win32.ActiveCfg = Release|Win32
+		{122E66DA-E3D1-49A7-BEC2-7F692006D1F4}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
