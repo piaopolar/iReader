@@ -104,7 +104,7 @@ std::vector<CBookSkyMgr::BOOK_INFO> CBookSkyMgr::GetBookInfo(const char *pszKeyW
 		case 2:
 			// 有可能没简介
 			if (boost::regex_match(strLine.c_str(), what, expDesc)) {
-				infoBook.m_strPicUrl = what[2].str();
+				infoBook.m_strDesc = what[2].str();
 			}
 
 			if (boost::regex_match(strLine.c_str(), what, expUpdate)) {
