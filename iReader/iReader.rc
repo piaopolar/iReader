@@ -16,7 +16,7 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// 中文(中华人民共和国) resources
+// Chinese (P.R.C.) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
 #ifdef _WIN32
@@ -95,9 +95,11 @@ CAPTION "iReader"
 FONT 9, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     EDITTEXT        IDC_EDT_KEYWORD,24,15,120,15,ES_AUTOHSCROLL
-    PUSHBUTTON      "Search",IDC_BTN_SEARCH,174,17,48,15
+    PUSHBUTTON      "Search",IDC_BTN_SEARCH,255,15,48,15
     EDITTEXT        IDC_EDT_LOGINFO,23,38,199,65,ES_MULTILINE | ES_AUTOHSCROLL | ES_READONLY | ES_WANTRETURN
     EDITTEXT        IDC_EDT_RESULT,26,110,348,209,ES_MULTILINE | ES_AUTOHSCROLL | ES_READONLY | ES_WANTRETURN
+    CONTROL         "Book",IDC_RADIO_BOOK,"Button",BS_AUTORADIOBUTTON | WS_GROUP,151,15,30,15
+    CONTROL         "Author",IDC_RADIO_AUTHOR,"Button",BS_AUTORADIOBUTTON,199,15,42,15
 END
 
 
@@ -177,7 +179,7 @@ BEGIN
     IDS_ABOUTBOX            "关于 iReader(&A)..."
 END
 
-#endif    // 中文(中华人民共和国) resources
+#endif    // Chinese (P.R.C.) resources
 /////////////////////////////////////////////////////////////////////////////
 
 
