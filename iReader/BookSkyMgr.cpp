@@ -63,7 +63,7 @@ std::vector<CBookSkyMgr::BOOK_INFO> CBookSkyMgr::GetBookInfo(const char *pszKeyW
 
 	boost::regex expBookInfo("(.*?)书名：<a href=\"(.*?)\"><b>(.*?)</b></a>　作者：<a href=\"(.*?)\">(.*?)</a>(.*?)");
 	boost::regex expPicUrl("(.*?)<td width=\"([0-9]+)\" valign=\"top\"><img src=\"(.*?)\" width=\"([0-9]+)\" height=\"([0-9]+)\"></td>(.*?)");
-	boost::regex expDesc("(.*?)<td valign=\"top \"><br>(.*?)<br> <br><br> </td>(.*?)");
+	boost::regex expDesc("(.*?)<td valign=\"top\"><br>(.*?)<br> <br><br> </td>(.*?)");
 	boost::regex expUpdate("(.*?)最近更新：<a class=\"buy\" href=\"(.*?)\">(.*?)</a>(.*?)<br><br></td>(.*?)");
 	boost::regex expNextPage("(.*?)<td bgcolor=\"#EEEEEE\" align=\"right\" colspan=\"2\"><a href='(.*?)'>更多..</a></td>(.*?)");
 
@@ -105,6 +105,7 @@ std::vector<CBookSkyMgr::BOOK_INFO> CBookSkyMgr::GetBookInfo(const char *pszKeyW
 			// 有可能没简介
 			if (boost::regex_match(strLine.c_str(), what, expDesc)) {
 				infoBook.m_strDesc = what[2].str();
+				ReplaceStdString(infoBook.m_strDesc, "<br>", "\n");
 			}
 
 			if (boost::regex_match(strLine.c_str(), what, expUpdate)) {
