@@ -1,5 +1,6 @@
 #pragma once
 #include <afxwin.h>
+#include <vector>
 #include <string>
 
 #define CONFIG_INI	"config.ini"
@@ -8,6 +9,10 @@ const int MAX_STRING = 1024;
 
 void FormatPath(std::string &strPath);
 
+void RegexSplit(std::string strIn, const char *pszSplitRegex, int nWhatIndex,
+				OUT std::vector<std::string> &rVec);
+void RegexSplitMul(std::string strIn, const char *pszSplitRegex,
+				   OUT std::vector<std::vector<std::string> > &rResult);
 void TrimRight(char *pszStr);
 void SetLogEdit(CEdit *pEditLog);
 void LogInfoIn(const char *pszFormat, ...);

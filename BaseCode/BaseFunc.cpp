@@ -1,5 +1,7 @@
 #include "stdafx.h"
 
+#include <boost/regex.hpp>
+
 #include "BaseFunc.h"
 
 CEdit *s_pEditLog;
@@ -70,7 +72,7 @@ void TrimRight(char *pszStr)
 void LogInfoIn(const char *pszFormat, ...)
 {
 	//~~~~~~~~~~~~~~~~~~~~
-	static CString cstrData;
+	CString cstrData;
 	std::string strLine;
 	va_list args;
 	int len;
@@ -89,6 +91,7 @@ void LogInfoIn(const char *pszFormat, ...)
 	free(buffer);
 
 	strLine += "\r\n";
+	s_pEditLog->GetWindowText(cstrData);
 	cstrData += strLine.c_str();
 
 	if (NULL == s_pEditLog) {
@@ -354,4 +357,54 @@ std::string ANSI_2_UTF8(const std::string &strANSI)
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 	return strUTF8;
+}
+
+// ============================================================================
+// ==============================================================================
+void RegexSplit(std::string strIn,
+				const char *pszSplitRegex,
+				int nWhatIndex,
+				OUT std::vector<std::string> &rVec)
+{
+	//~~~~~~~~~~~~~~~
+	boost::smatch what;
+	//~~~~~~~~~~~~~~~
+
+	boost::regex exp(pszSplitRegex);
+
+	while (boost::regex_search(strIn, what, exp)) {
+		rVec.push_back(what[nWhatIndex]);
+		ReplaceStdString(strIn, what[0].str(), "");
+	}
+}
+
+// ============================================================================
+// ==============================================================================
+void RegexSplitMul(std::string strIn,
+				   const char *pszSplitRegex,
+				   OUT std::vector<std::vector<std::string> > &rResult)
+{
+	rResult.clear();
+
+	//~~~~~~~~~~~~~~~
+	boost::smatch what;
+	//~~~~~~~~~~~~~~~
+
+	boost::regex exp(pszSplitRegex);
+
+	while (boost::regex_search(strIn, what, exp)) {
+
+		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+		std::vector<std::string> vecOne;
+		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+		for (boost::smatch::const_iterator it = what.begin(); it != what.end();
+			 ++it) {
+			vecOne.push_back(it->str());
+		}
+
+		rResult.push_back(vecOne);
+
+		ReplaceStdString(strIn, what[0].str(), "");
+	}
 }

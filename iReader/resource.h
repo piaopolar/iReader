@@ -12,8 +12,18 @@
 #define IDC_EDT_LOGINFO                 1002
 #define IDC_EDIT3                       1003
 #define IDC_EDT_RESULT                  1003
+#define IDC_EDT_INDEX                   1004
 #define IDC_RADIO_BOOK                  1005
 #define IDC_RADIO_AUTHOR                1006
+#define IDC_BTN_                        1007
+#define IDC_BTN_SHOW                    1007
+#define IDC_RADIO_BOOKS                 1008
+#define IDC_RADIO_CHAPTER               1009
+#define IDC_RADIO_TEXT                  1010
+#define IDC_RADIO_BOOKS2                1011
+#define IDC_RADIO_SITE                  1011
+#define IDC_BTN_SEARCH2                 1012
+#define IDC_BTN_CLEAR                   1012
 
 // Next default values for new objects
 // 
